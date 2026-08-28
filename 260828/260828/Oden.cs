@@ -5,7 +5,7 @@
         IsSale = true;
     }
 
-    public override int MenuCalculate(int cnt)
+    public override int MenuCalculate(int totalSkewer, int cnt)
     {
         int totalPrice = 0;
 
@@ -15,7 +15,7 @@
         {
             if (Category == CategoryType.Skewer)
             {
-                if (cnt >= SALE_SKEWER_COUNT)
+                if (totalSkewer >= SALE_SKEWER_COUNT)
                 {
                     int sale = Price * cnt;
                     sale /= SALE_PRICE;

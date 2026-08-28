@@ -86,7 +86,7 @@
         return categoryName;
     }
 
-    public abstract int MenuCalculate(int cnt);
+    public abstract int MenuCalculate(int totalSkewer, int cnt);
 
     public virtual string PrintSale()
     {

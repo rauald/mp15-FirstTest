@@ -5,7 +5,7 @@
         IsSale = false;
     }
 
-    public override int MenuCalculate(int cnt)
+    public override int MenuCalculate(int totalSkewer, int cnt)
     {
         int totalPrice = 0;
 

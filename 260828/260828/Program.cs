@@ -60,28 +60,38 @@ class Program
             Console.WriteLine();
             Console.WriteLine($"[{SHOPPING_CART}]");
 
-            int TotalPrice = 0;
+            int totalPrice = 0;
+
+            int totalSkewer = 0;
+
+            for(int i = 0; i < OrderMenuList.Count; i++)
+            {
+                if(menu[OrderMenuList[i]].Category == CategoryType.Skewer)
+                {
+                    totalSkewer += OrderCntList[i];
+                }
+            }
 
             for(int i = 0;  i < OrderMenuList.Count; i++)
             {
-                Console.WriteLine($"  {menu[OrderMenuList[i]].Name} x{OrderCntList[i]}   { menu[OrderMenuList[i]].MenuCalculate(OrderCntList[i])}원");
-                TotalPrice += menu[OrderMenuList[i]].MenuCalculate(OrderCntList[i]);
+                Console.WriteLine($"  {menu[OrderMenuList[i]].Name} x{OrderCntList[i]}   { menu[OrderMenuList[i]].MenuCalculate(totalSkewer, OrderCntList[i])}원");
+                totalPrice += menu[OrderMenuList[i]].MenuCalculate(totalSkewer, OrderCntList[i]);
             }
 
-            Console.WriteLine($"  합계 : {TotalPrice}원");
+            Console.WriteLine($"  합계 : {totalPrice}원");
             Console.WriteLine("----------------------------------------");
 
             Console.WriteLine();
 
             Console.WriteLine("1. 담기   2. 전체 비우기   3. 결제   4. 영업 종료");
 
-            // 1부터 6 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
+            // 1부터 4 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
             int ChoiceNum = ConsoleInput.ReadIntInRange("선택 번호 : ", 1, 4);
 
             Console.WriteLine();
             if (ChoiceNum == 1)
             {
-                // 1부터 6 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
+                // 1부터 8 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
                 int menuNumber = ConsoleInput.ReadIntInRange("메뉴 번호 : ", 1, 8);
                 int menuCnt = ConsoleInput.ReadIntInRange("주문 수량 : ", 1, 99);
 
@@ -111,17 +121,17 @@ class Program
                 // 0 이상의 값을 받습니다. 위쪽 한계를 정하기 어려울 때 씁니다.
                 int paid = ConsoleInput.ReadIntAtLeast("받은 금액 : ", 0);
 
-                if(paid < TotalPrice)
+                if(paid < totalPrice)
                 {
                     Console.WriteLine("돈이 모자랍니다!");
                 }
                 else
                 {
                     int sales = 0;
-                    sales = paid - TotalPrice;
+                    sales = paid - totalPrice;
                     Console.WriteLine($"감사합니다! 거스름돈 {sales}원 입니다.");
                     TotalOrder++;
-                    TotalSales += TotalPrice;
+                    TotalSales += totalPrice;
 
                     OrderMenuList.Clear();
                     OrderCntList.Clear();
