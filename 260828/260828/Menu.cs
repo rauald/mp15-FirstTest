@@ -1,4 +1,4 @@
-﻿public abstract class Menu : ICategory
+﻿public abstract class Menu : IMenuInfo
 {
     private string _category;
     public string Category
