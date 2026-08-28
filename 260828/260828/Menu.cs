@@ -1,7 +1,7 @@
 ﻿public abstract class Menu : IMenuInfo
 {
-    private string _category;
-    public string Category
+    private CategoryType _category;
+    public CategoryType Category
     {
         get
         {
@@ -39,7 +39,20 @@
         }
     }
 
-    public Menu(string category, string name, int price)
+    private bool _isSale;
+    public bool IsSale
+    {
+        get
+        {
+            return _isSale;
+        }
+        protected set
+        {
+            _isSale = value;
+        }
+    }
+
+    public Menu(CategoryType category, string name, int price)
     {
         _category = category;
         _name = name;

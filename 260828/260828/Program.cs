@@ -6,7 +6,7 @@ class Program
     {
         const string SHOP_NAME = "메플 분식집";
         const int SALE_FRY_COUNT = 3;
-        const int SALE_ODEN_COUNT = 5;
+        const int SALE_SKEWER_COUNT = 5;
         const float SALE_PRICE = 10f;
 
         // 가게 : 분식집
@@ -24,14 +24,24 @@ class Program
 
         Menu[] menu = new Menu[]
         {
-            new Tteokbokki("분식류", "떡볶이", 4000),
-            new RoseTteokbokki("분식류", "로제 떡볶이", 5000),
+            new Tteokbokki(CategoryType.RiceCakes, "떡볶이", 4000),
+            new RoseTteokbokki(CategoryType.RiceCakes, "로제 떡볶이", 5000),
         };
 
         Console.WriteLine("[메뉴판]");
         for(int i = 0; i < menu.Length; i++)
         {
-            Console.WriteLine($" {i + 1}. ({menu[i].Category})  {menu[i].Name}  {menu[i].Price}원");
+            string saleStr = "";
+            if (menu[i].Category == CategoryType.RiceCakes)
+            {
+                saleStr = $"{SALE_FRY_COUNT}개 이상 구매시 {SALE_PRICE}% 할인";
+            }
+            else if (menu[i].Category == CategoryType.Skewer)
+            {
+                saleStr = $"{SALE_SKEWER_COUNT}개 이상 구매시 {SALE_PRICE}% 할인";
+            }
+
+            Console.WriteLine($" {i + 1}. ({menu[i].Category})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
         }
         Console.WriteLine("----------------------------------------");
 
