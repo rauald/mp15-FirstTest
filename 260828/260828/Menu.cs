@@ -63,28 +63,7 @@
         _price = price;
     }
 
-    public string CategoryName(CategoryType category)
-    {
-        string categoryName = "";
-
-        switch (category)
-        {
-            case CategoryType.RiceCakes:
-                categoryName = "분식류";
-                break;
-            case CategoryType.Fry:
-                categoryName = "튀김류";
-                break;
-            case CategoryType.Skewer:
-                categoryName = "꼬치류";
-                break;
-            case CategoryType.Kimbap:
-                categoryName = "김밥류";
-                break;
-        }
-
-        return categoryName;
-    }
+    
 
     public abstract int MenuCalculate(int totalSkewer, int cnt);
 

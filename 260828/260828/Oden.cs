@@ -32,7 +32,7 @@
     {
         string str = "";
 
-        str = $"[{CategoryName(Category) } {SALE_SKEWER_COUNT}개 이상 구매시 {SALE_PRICE}% 할인]";
+        str = $"[{SALE_SKEWER_COUNT}개 이상 구매시 {SALE_PRICE}% 할인]";
 
         return str;
     }

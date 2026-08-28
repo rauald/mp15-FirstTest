@@ -34,6 +34,8 @@ class Program
         List<int> OrderMenuList = new();
         List<int> OrderCntList = new();
 
+        int choiceIdx = 0;
+
         while(true)
         {
             Console.Clear();
@@ -43,42 +45,67 @@ class Program
             Console.WriteLine("----------------------------------------");
 
             Console.WriteLine();
-
             Console.WriteLine("----------------------------------------");
-            Console.WriteLine($"[{MENU_BOARD}]");
-            for (int i = 0; i < menu.Length; i++)
-            {
-                string saleStr = "";
-                if (menu[i].IsSale)
-                {
-                    saleStr = menu[i].PrintSale();
-                }
-                Console.WriteLine($" {i + 1}. ({menu[i].CategoryName(menu[i].Category)})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
-            }
-            Console.WriteLine("----------------------------------------");
-
-            Console.WriteLine();
             Console.WriteLine($"[{SHOPPING_CART}]");
 
             int totalPrice = 0;
 
             int totalSkewer = 0;
 
-            for(int i = 0; i < OrderMenuList.Count; i++)
+            for (int i = 0; i < OrderMenuList.Count; i++)
             {
-                if(menu[OrderMenuList[i]].Category == CategoryType.Skewer)
+                if (menu[OrderMenuList[i]].Category == CategoryType.Skewer)
                 {
                     totalSkewer += OrderCntList[i];
                 }
             }
 
-            for(int i = 0;  i < OrderMenuList.Count; i++)
+            for (int i = 0; i < OrderMenuList.Count; i++)
             {
-                Console.WriteLine($"  {menu[OrderMenuList[i]].Name} x{OrderCntList[i]}   { menu[OrderMenuList[i]].MenuCalculate(totalSkewer, OrderCntList[i])}원");
+                Console.WriteLine($"  {menu[OrderMenuList[i]].Name} x{OrderCntList[i]}   {menu[OrderMenuList[i]].MenuCalculate(totalSkewer, OrderCntList[i])}원");
                 totalPrice += menu[OrderMenuList[i]].MenuCalculate(totalSkewer, OrderCntList[i]);
             }
 
             Console.WriteLine($"  합계 : {totalPrice}원");
+            Console.WriteLine("----------------------------------------");
+
+
+            Console.WriteLine();
+
+            for(int i = 0; i < (int)CategoryType.Max; i++)
+            {
+                Console.Write($"{i + 1}. {CategoryName((CategoryType)i)}  ");
+            }
+
+            Console.WriteLine();
+
+            // 1부터 4 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
+            int categoryChoiceNum = ConsoleInput.ReadIntInRange("선택 번호 : ", 1, 4);
+
+            choiceIdx = (categoryChoiceNum - 1);
+
+            List<Menu> choiceList = new();
+
+            for(int i = 0; i < menu.Length; i++)
+            {
+                if (menu[i].Category == (CategoryType)choiceIdx)
+                {
+                    choiceList.Add(menu[i]);
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine($"[{MENU_BOARD}]");
+            for (int i = 0; i < choiceList.Count; i++)
+            {
+                string saleStr = "";
+                if (choiceList[i].IsSale)
+                {
+                    saleStr = choiceList[i].PrintSale();
+                }
+                Console.WriteLine($" {i + 1}. ({CategoryName(choiceList[i].Category)})  {choiceList[i].Name}  {choiceList[i].Price}원  {(choiceList[i].IsSale ? saleStr : "[정가]")}");
+            }
             Console.WriteLine("----------------------------------------");
 
             Console.WriteLine();
@@ -91,15 +118,15 @@ class Program
             Console.WriteLine();
             if (ChoiceNum == 1)
             {
-                // 1부터 8 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
-                int menuNumber = ConsoleInput.ReadIntInRange("메뉴 번호 : ", 1, 8);
+                // 1부터 2 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.
+                int menuNumber = ConsoleInput.ReadIntInRange("메뉴 번호 : ", 1, 2);
                 int menuCnt = ConsoleInput.ReadIntInRange("주문 수량 : ", 1, 99);
 
-                if (OrderMenuList.Contains(menuNumber - 1))
+                if (OrderMenuList.Contains(choiceIdx * 2 + menuNumber - 1))
                 {
                     for(int i =0; i < OrderMenuList.Count; i++)
                     {
-                        if(OrderMenuList[i] == (menuNumber - 1))
+                        if(OrderMenuList[i] == (choiceIdx * 2 + menuNumber - 1))
                         {
                             OrderCntList[i] += menuCnt;
                         }
@@ -107,7 +134,7 @@ class Program
                 }
                 else
                 {
-                    OrderMenuList.Add(menuNumber - 1);
+                    OrderMenuList.Add(choiceIdx * 2 + menuNumber - 1);
                     OrderCntList.Add(menuCnt);
                 }
             }
@@ -152,5 +179,28 @@ class Program
         Console.WriteLine("----------------------------------------");
         Console.WriteLine($"총 주문 건수 : {TotalOrder}  개");
         Console.WriteLine($"총 매출 : {TotalSales}  원");
+    }
+
+    static string CategoryName(CategoryType category)
+    {
+        string categoryName = "";
+
+        switch (category)
+        {
+            case CategoryType.RiceCakes:
+                categoryName = "분식류";
+                break;
+            case CategoryType.Fry:
+                categoryName = "튀김류";
+                break;
+            case CategoryType.Skewer:
+                categoryName = "꼬치류";
+                break;
+            case CategoryType.Kimbap:
+                categoryName = "김밥류";
+                break;
+        }
+
+        return categoryName;
     }
 }
