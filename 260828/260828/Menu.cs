@@ -41,6 +41,10 @@
 
     public Menu(string category, string name, int price)
     {
-
+        _category = category;
+        _name = name;
+        _price = price;
     }
+
+    public abstract int MenuCalculate(int cnt);
 }
