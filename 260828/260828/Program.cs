@@ -17,12 +17,6 @@ class Program
         int TotalOrder = 0;
         int TotalSales = 0;
 
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine($"{SHOP_NAME}");
-        Console.WriteLine("----------------------------------------");
-
-        Console.WriteLine();
-
         Menu[] menu = new Menu[]
         {
             new Tteokbokki(CategoryType.RiceCakes, "떡볶이", 4000),
@@ -40,6 +34,14 @@ class Program
 
         while(true)
         {
+            Console.Clear();
+
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine($"{SHOP_NAME}");
+            Console.WriteLine("----------------------------------------");
+
+            Console.WriteLine();
+
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("[메뉴판]");
             for (int i = 0; i < menu.Length; i++)
