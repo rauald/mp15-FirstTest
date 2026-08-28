@@ -6,6 +6,8 @@ using System;
 class Program
 {
     const string SHOP_NAME = "메플 분식집";
+    const string SHOPPING_CART = "장바구니";
+    const string MENU_BOARD = "메뉴판";
 
     static void Main(string[] args)
     {
@@ -43,7 +45,7 @@ class Program
             Console.WriteLine();
 
             Console.WriteLine("----------------------------------------");
-            Console.WriteLine("[메뉴판]");
+            Console.WriteLine($"[{MENU_BOARD}]");
             for (int i = 0; i < menu.Length; i++)
             {
                 string saleStr = "";
@@ -56,7 +58,7 @@ class Program
             Console.WriteLine("----------------------------------------");
 
             Console.WriteLine();
-            Console.WriteLine("[장바구니]");
+            Console.WriteLine($"[{SHOPPING_CART}]");
 
             int TotalPrice = 0;
 
