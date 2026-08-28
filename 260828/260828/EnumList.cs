@@ -3,5 +3,7 @@
     RiceCakes,
     Fry,
     Skewer,
-    Kimbap
+    Kimbap,
+
+    Max
 }
