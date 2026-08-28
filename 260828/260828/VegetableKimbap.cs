@@ -1,6 +1,6 @@
-﻿public class RoseTteokbokki : Menu
+﻿public class VegetableKimbap : Menu
 {
-    public RoseTteokbokki(CategoryType category, string name, int price) : base(category, name, price)
+    public VegetableKimbap(CategoryType category, string name, int price) : base(category, name, price)
     {
         IsSale = false;
     }

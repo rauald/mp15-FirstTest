@@ -4,4 +4,13 @@
     {
         IsSale = false;
     }
+
+    public override int MenuCalculate( int cnt)
+    {
+        int totalPrice = 0;
+
+        totalPrice = Price * cnt;
+
+        return totalPrice;
+    }
 }

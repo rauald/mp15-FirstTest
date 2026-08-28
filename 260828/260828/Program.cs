@@ -1,13 +1,12 @@
 ﻿using System;
 
+
 class Program
 {
+    const string SHOP_NAME = "메플 분식집";
+
     static void Main(string[] args)
     {
-        const string SHOP_NAME = "메플 분식집";
-        const int SALE_FRY_COUNT = 3;
-        const int SALE_SKEWER_COUNT = 5;
-        const float SALE_PRICE = 10f;
 
         // 가게 : 분식집
         // 분류 : 떡류, 튀김류, 김밥류, 꼬치류
@@ -17,7 +16,7 @@ class Program
         int TotalSales = 0;
 
         Console.WriteLine("----------------------------------------");
-        Console.WriteLine("메플 분식집");
+        Console.WriteLine($"{SHOP_NAME}");
         Console.WriteLine("----------------------------------------");
 
         Console.WriteLine();
@@ -26,37 +25,40 @@ class Program
         {
             new Tteokbokki(CategoryType.RiceCakes, "떡볶이", 4000),
             new RoseTteokbokki(CategoryType.RiceCakes, "로제 떡볶이", 5000),
+            new FriedSeaweedRoll(CategoryType.Fry, "김말이 튀김", 500),
+            new FriedSquid(CategoryType.Fry, "오징어 튀김", 1000),
+            new Oden(CategoryType.Skewer, "오뎅", 500),
+            new SpicyFishCakes(CategoryType.Skewer, "빨간 오뎅", 700),
+            new VegetableKimbap(CategoryType.Kimbap, "야채 김밥", 4000),
+            new TunaKimbap(CategoryType.Kimbap, "참치 김밥", 5000),
         };
 
         Console.WriteLine("[메뉴판]");
         for(int i = 0; i < menu.Length; i++)
         {
             string saleStr = "";
-            if (menu[i].Category == CategoryType.RiceCakes)
+            if (menu[i].IsSale)
             {
-                saleStr = $"{SALE_FRY_COUNT}개 이상 구매시 {SALE_PRICE}% 할인";
+                saleStr = menu[i].PrintSale();
             }
-            else if (menu[i].Category == CategoryType.Skewer)
-            {
-                saleStr = $"{SALE_SKEWER_COUNT}개 이상 구매시 {SALE_PRICE}% 할인";
-            }
-
-            Console.WriteLine($" {i + 1}. ({menu[i].Category})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
+            Console.WriteLine($" {i + 1}. ({menu[i].CategoryName(menu[i].Category)})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
         }
         Console.WriteLine("----------------------------------------");
 
-        List<int> OrdermenuList = new();
+        List<int> OrderMenuList = new();
         List<int> OrderCntList = new();
 
         while(true)
         {
             Console.WriteLine();
             Console.WriteLine("[장바구니]");
+
             int TotalPrice = 0;
-            for(int i = 0;  i < OrdermenuList.Count; i++)
+
+            for(int i = 0;  i < OrderMenuList.Count; i++)
             {
-                Console.WriteLine($"  {menu[OrdermenuList[i]].Name} x{OrderCntList[i]}   { menu[OrdermenuList[i]].MenuCalculate(OrderCntList[i])}원");
-                TotalPrice += menu[OrdermenuList[i]].MenuCalculate(OrderCntList[i]);
+                Console.WriteLine($"  {menu[OrderMenuList[i]].Name} x{OrderCntList[i]}   { menu[OrderMenuList[i]].MenuCalculate(OrderCntList[i])}원");
+                TotalPrice += menu[OrderMenuList[i]].MenuCalculate(OrderCntList[i]);
             }
 
             Console.WriteLine($"  합계 : {TotalPrice}원");
@@ -76,12 +78,25 @@ class Program
                 int menuNumber = ConsoleInput.ReadIntInRange("메뉴 번호 : ", 1, 8);
                 int menuCnt = ConsoleInput.ReadIntInRange("주문 수량 : ", 1, 99);
 
-                OrdermenuList.Add(menuNumber - 1);
-                OrderCntList.Add(menuCnt);
+                if (OrderMenuList.Contains(menuNumber - 1))
+                {
+                    for(int i =0; i < OrderMenuList.Count; i++)
+                    {
+                        if(OrderMenuList[i] == (menuNumber - 1))
+                        {
+                            OrderCntList[i] += menuCnt;
+                        }
+                    }
+                }
+                else
+                {
+                    OrderMenuList.Add(menuNumber - 1);
+                    OrderCntList.Add(menuCnt);
+                }
             }
             else if (ChoiceNum == 2)
             {
-                OrdermenuList.Clear();
+                OrderMenuList.Clear();
                 OrderCntList.Clear();
             }
             else if (ChoiceNum == 3)
@@ -95,11 +110,13 @@ class Program
                 }
                 else
                 {
-                    Console.WriteLine($"감사합니다! 거스름돈 {paid - TotalPrice}원 입니다.");
+                    int sales = 0;
+                    sales = paid - TotalPrice;
+                    Console.WriteLine($"감사합니다! 거스름돈 {sales}원 입니다.");
                     TotalOrder++;
-                    TotalSales += paid;
+                    TotalSales += TotalPrice;
 
-                    OrdermenuList.Clear();
+                    OrderMenuList.Clear();
                     OrderCntList.Clear();
                 }
             }
@@ -114,5 +131,9 @@ class Program
 
             Console.WriteLine("----------------------------------------");
         }
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine($"총 주문 건수 : {TotalOrder}  개");
+        Console.WriteLine($"총 매출 : {TotalSales}  원");
     }
 }

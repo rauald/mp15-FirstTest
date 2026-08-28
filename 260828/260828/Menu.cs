@@ -1,5 +1,9 @@
 ﻿public abstract class Menu : IMenuInfo
 {
+    protected const int SALE_FRY_COUNT = 3;
+    protected const int SALE_SKEWER_COUNT = 5;
+    protected const int SALE_PRICE = 10;
+
     private CategoryType _category;
     public CategoryType Category
     {
@@ -59,12 +63,33 @@
         _price = price;
     }
 
-    public virtual int MenuCalculate(int cnt)
+    public string CategoryName(CategoryType category)
     {
-        int totalPrice = 0;
+        string categoryName = "";
 
-        totalPrice = Price * cnt;
+        switch (category)
+        {
+            case CategoryType.RiceCakes:
+                categoryName = "분식류";
+                break;
+            case CategoryType.Fry:
+                categoryName = "튀김류";
+                break;
+            case CategoryType.Skewer:
+                categoryName = "꼬치류";
+                break;
+            case CategoryType.Kimbap:
+                categoryName = "김밥류";
+                break;
+        }
 
-        return totalPrice;
+        return categoryName;
+    }
+
+    public abstract int MenuCalculate(int cnt);
+
+    public virtual string PrintSale()
+    {
+        return "";
     }
 }
