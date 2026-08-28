@@ -1,0 +1,46 @@
+﻿public abstract class Menu : ICategory
+{
+    private string _category;
+    public string Category
+    {
+        get
+        {
+            return _category;
+        }
+        protected set
+        {
+            _category = value;
+        }
+    }
+
+    private string _name;
+    public string Name
+    {
+        get
+        {
+            return _name;
+        }
+        protected set
+        {
+            _name = value;
+        }
+    }
+
+    private int _price;
+    public int Price
+    {
+        get
+        {
+            return _price;
+        }
+        protected set
+        {
+            _price = value;
+        }
+    }
+
+    public Menu(string category, string name, int price)
+    {
+
+    }
+}
