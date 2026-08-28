@@ -35,23 +35,24 @@ class Program
             new TunaKimbap(CategoryType.Kimbap, "참치 김밥", 5000),
         };
 
-        Console.WriteLine("[메뉴판]");
-        for(int i = 0; i < menu.Length; i++)
-        {
-            string saleStr = "";
-            if (menu[i].IsSale)
-            {
-                saleStr = menu[i].PrintSale();
-            }
-            Console.WriteLine($" {i + 1}. ({menu[i].CategoryName(menu[i].Category)})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
-        }
-        Console.WriteLine("----------------------------------------");
-
         List<int> OrderMenuList = new();
         List<int> OrderCntList = new();
 
         while(true)
         {
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("[메뉴판]");
+            for (int i = 0; i < menu.Length; i++)
+            {
+                string saleStr = "";
+                if (menu[i].IsSale)
+                {
+                    saleStr = menu[i].PrintSale();
+                }
+                Console.WriteLine($" {i + 1}. ({menu[i].CategoryName(menu[i].Category)})  {menu[i].Name}  {menu[i].Price}원  {(menu[i].IsSale ? saleStr : "[정가]")}");
+            }
+            Console.WriteLine("----------------------------------------");
+
             Console.WriteLine();
             Console.WriteLine("[장바구니]");
 
