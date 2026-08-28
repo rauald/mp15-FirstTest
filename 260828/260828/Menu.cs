@@ -46,5 +46,12 @@
         _price = price;
     }
 
-    public abstract int MenuCalculate(int cnt);
+    public virtual int MenuCalculate(int cnt)
+    {
+        int totalPrice = 0;
+
+        totalPrice = Price * cnt;
+
+        return totalPrice;
+    }
 }
